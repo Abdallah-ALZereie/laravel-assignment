@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Submission; // استدعاء نموذج البيانات
 
 class FormController extends Controller
 {
@@ -16,7 +17,12 @@ class FormController extends Controller
     }
 
     public function processForm(Request $request) {
-        $name = $request->input('name');
-        $dept = $request->input('department');
-return "تم استلام البيانات بنجاح! الاسم: " . $name . "، والقسم المختار رقم: " . $dept;    }
+
+    Submission::create([
+            'name' => $request->input('name'),
+            'department' => $request->input('department')
+        ]);
+
+        return "تم إرسال البيانات وحفظها في قاعدة البيانات بنجاح!";
+    }
 }
